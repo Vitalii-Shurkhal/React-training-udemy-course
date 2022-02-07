@@ -1,11 +1,14 @@
-import { useContext } from 'react';
-
+import { useContext, useState } from 'react';
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 import CartContext from '../../store/cart-context';
+import Chackout from './Checkout';
 
 const Cart = (props) => {
+
+  const [showChackout, setShowChackout ] = useState(false)
+
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -18,6 +21,10 @@ const Cart = (props) => {
   const cartItemAddHandler = (item) => {
     cartCtx.addItem(item);
   };
+
+  const chackOutHandler = () => {
+    setShowChackout(!showChackout)
+  }
 
   const cartItems = (
     <ul className={classes['cart-items']}>
@@ -45,7 +52,10 @@ const Cart = (props) => {
         <button className={classes['button--alt']} onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        {hasItems && <button className={classes.button} onClick={chackOutHandler}>Order</button>}
+      </div>
+      <div>
+        {showChackout && <Chackout/>}
       </div>
     </Modal>
   );
