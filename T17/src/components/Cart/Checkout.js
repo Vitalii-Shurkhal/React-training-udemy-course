@@ -1,74 +1,39 @@
-import { useCallback, useState } from 'react';
+
+import { useRef } from 'react';
 import style from './Checkout.module.css'
 
-const Chackout = () => {
- // Name input 
-    const [enteredName, setEnteredName] = useState('');
-    const [inputNameTouched, setInputNameTouched] = useState(false);
-    const enteredNameIsValid = enteredName.trim() !== '';
-    const inputNameIsInvalid = !enteredNameIsValid && inputNameTouched; 
+const Chackout = (props) => {
+    
+    const enteredName = useRef();
+    const enteredStreet = useRef();
+    const enteredPostalCode = useRef();
+    const enteredCity = useRef();
 
-    const nameChangeHandler = (event) => {
-        setEnteredName(event.target.value)
-    }; 
-
-    const nameInputTouched = () => {
-        setInputNameTouched(true)
+    const onConfirmHandler = event => {
+        event.preventDefault()
+        console.log('send')
     }
 
-// Street input 
-
-const [enteredStreet, setEnteredStreet] = useState('');
-const [inputStreetTouched, setInputStreetTouched] = useState(false);
-const enteredStreetIsValid = enteredStreet.trim() !== '';
-const inputStreetIsInvalid = !enteredStreet && inputStreetTouched;
-
-const streetChangeHandler = (event) => {
-    setEnteredStreet(event.target.value)
-}
-
-const streetInputTouched = () => {
-    setInputStreetTouched(true)
-}
-
-// Postal code input 
-
-const [enteredPostalCode, setEnteredPostalCode] = useState('');
-const [inputPostalCodeTouched, setInputPostalCodeTouched] = useState(false);
-const enteredPostalCodeIsValid = enteredPostalCode.trim() !== '';
-const inputPostalCodeIsInvalid = !enteredPostalCode && inputPostalCodeTouched;
-
-const postalCodeChangeHandler = (event) => {
-    setEnteredPostalCode(event.target.value)
-}
-
-const postalCodeInputTouched = () => {
-    setInputPostalCodeTouched(true)
-}
-
-// City input 
-
-
     return (
-        <form className={style.form}>
+        <form className={style.form} onSubmit={onConfirmHandler}>
             <div className={style.control}>
                 <label htmlFor='firstName'>Your Name</label>
-                <input name ='firstName' type ='text' onChange={nameChangeHandler}  onBlur={nameInputTouched} value = {enteredName} />
+                <input ref={enteredName} name ='firstName' type ='text'  />
             </div>
             <div className={style.control}>
                 <label htmlFor='street'>Street</label>
-                <input name ='street' type ='text' onChange={streetChangeHandler} onBlur={streetInputTouched}  value={enteredStreet}/>
+                <input ref={enteredStreet} name ='street' type ='text'/>
             </div>
             <div className={style.control}>
                 <label  htmlFor='postalCode'>Postal Code</label>
-                <input name ='postalCode' type ='text' onChange={postalCodeChangeHandler} onBlur={postalCodeInputTouched} value={enteredPostalCode} />
+                <input ref={enteredPostalCode} name ='postalCode' type ='text'/>
             </div>
             <div className={style.control}>
                 <label htmlFor='city'>City</label>
-                <input name ='city' type ='text' />
+                <input ref={enteredCity} name ='city' type ='text' />
             </div>
             <div className={style.actions}>
-                <button>Cancel</button>
+                <button type='button' onClick={props.onCansel}>Cancel</button>
                 <button className={style.submit}>Confirm</button>
             </div>
         </form>

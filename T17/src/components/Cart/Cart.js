@@ -55,7 +55,7 @@ const Cart = (props) => {
         {hasItems && <button className={classes.button} onClick={chackOutHandler}>Order</button>}
       </div>
       <div>
-        {showChackout && <Chackout/>}
+        {showChackout && <Chackout onCansel={props.onClose}/>}
       </div>
     </Modal>
   );
